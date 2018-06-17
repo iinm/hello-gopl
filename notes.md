@@ -15,4 +15,3 @@
 - :question: ex04のテストでファイルはどう扱う？
   - countLinesの引数をFileじゃなくてReaderにして、stringからReaderを作れば良さそう。
 - TODO: :question: ネストしたデータを `reflect.DeepEqual` で比較すると、違っていたときにどこが違うか分からない。power assertみたいなものはないの？
-- TODO: :question: ex05 エラーが発生したときはどうやってプログラムを終了すれば良い？ panic使ってみたけど、使い方あってる？
