@@ -1,7 +1,7 @@
 実行方法:
 
 ```
-go test -v -bench=. -benchmem
+go test -v -bench=Echo -benchmem
 ```
 
 

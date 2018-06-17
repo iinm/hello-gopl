@@ -8,7 +8,10 @@
   - p.357 テスト時にwriterを変更できるようにする。
 - TODO :question: ex01のテスト書いてみたけど、 `out.(*bytes.Buffer).String()` のリテラルがよく分からない。
 - TODO :question: ex03のベンチマークのテストをするために任意の数の文字列のスライスを作る関数を書いた。このテストをするときに、スライスの比較をしたかったので `reflect.DeepEqual` を使ったが、使い方あってる？ `reflect` っていう名前がちょっと怖い。
-- TODO: :question: ex03の引数を作る関数の中でなにも考えずに `append` してるけど、性能どうなの？スライス作るときにサイズ指定したほうが良いのでは?
+- :question: ex03の引数を作る関数の中でなにも考えずに `append` してるけど、性能どうなの？スライス作るときにサイズ指定したほうが良いのでは?
+  - makeでスライスのcapacityを指定できる。
+- :question: ex03のベンチマークのテストは並行で走るみたいだけど、パッケージグローバルにしたwriterを書き換えてしまって良いの？
+  - echoの引数にwriterを追加して実行ごとにwriterを設定した。
 - :question: ex04のテストでファイルはどう扱う？
   - countLinesの引数をFileじゃなくてReaderにして、stringからReaderを作れば良さそう。
 - TODO: :question: ネストしたデータを `reflect.DeepEqual` で比較すると、違っていたときにどこが違うか分からない。power assertみたいなものはないの？

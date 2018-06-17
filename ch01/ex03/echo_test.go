@@ -10,16 +10,14 @@ import (
 var args = makeTestArgs(10000)
 
 func benchmarkSlowEcho(b *testing.B, size int) {
-	out = new(bytes.Buffer)
 	for i := 0; i < b.N; i++ {
-		slowEcho(args[:size])
+		slowEcho(args[:size], new(bytes.Buffer))
 	}
 }
 
 func benchmarkEcho(b *testing.B, size int) {
-	out = new(bytes.Buffer)
 	for i := 0; i < b.N; i++ {
-		echo(args[:size])
+		echo(args[:size], new(bytes.Buffer))
 	}
 }
 
@@ -32,9 +30,9 @@ func BenchmarkEcho100(b *testing.B)       { benchmarkEcho(b, 100) }
 func BenchmarkEcho1000(b *testing.B)      { benchmarkEcho(b, 1000) }
 func BenchmarkEcho10000(b *testing.B)     { benchmarkEcho(b, 10000) }
 
-func makeTestArgs(length int) []string {
-	testArgs := []string{}
-	for i := 0; i < length; i++ {
+func makeTestArgs(size int) []string {
+	testArgs := make([]string, 0, size)
+	for i := 0; i < size; i++ {
 		testArgs = append(testArgs, "foo")
 	}
 	return testArgs
@@ -42,8 +40,8 @@ func makeTestArgs(length int) []string {
 
 func TestMakeTestArgs(t *testing.T) {
 	var tests = []struct {
-		length int
-		want   []string
+		size int
+		want []string
 	}{
 		{0, []string{}},
 		{1, []string{"foo"}},
@@ -51,10 +49,31 @@ func TestMakeTestArgs(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		descr := fmt.Sprintf("makeTestArgs(%d)", test.length)
-		got := makeTestArgs(test.length)
+		descr := fmt.Sprintf("makeTestArgs(%d)", test.size)
+		got := makeTestArgs(test.size)
 		if !reflect.DeepEqual(got, test.want) {
 			t.Errorf("%s = %q, want %q", descr, got, test.want)
 		}
+	}
+}
+
+// 学習のためのテスト: スライスのキャパシティを設定したほうが速いか？
+func makeTestArgsNoCap(size int) []string {
+	testArgs := []string{}
+	for i := 0; i < size; i++ {
+		testArgs = append(testArgs, "foo")
+	}
+	return testArgs
+}
+
+func BenchmarkMakeTestArgs(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		makeTestArgs(1000)
+	}
+}
+
+func BenchmarkMakeTestArgsNoCap(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		makeTestArgsNoCap(1000)
 	}
 }
