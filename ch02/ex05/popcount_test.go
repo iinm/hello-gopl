@@ -7,28 +7,39 @@ import (
 
 const x = 2 ^ 64 - 1
 
+var result int
+
 func BenchmarkPopCount(b *testing.B) {
+	// 戻り値を使わないとコンパイラの最適化により実行されない
+	total := 0
 	for i := 0; i < b.N; i++ {
-		PopCount(x)
+		total += PopCount(x)
 	}
+	result = total
 }
 
 func BenchmarkPopCountByLoop(b *testing.B) {
+	total := 0
 	for i := 0; i < b.N; i++ {
-		PopCountByLoop(x)
+		total += PopCountByLoop(x)
 	}
+	result = total
 }
 
 func BenchmarkPopCountByShift(b *testing.B) {
+	total := 0
 	for i := 0; i < b.N; i++ {
-		PopCountByShift(x)
+		total += PopCountByShift(x)
 	}
+	result = total
 }
 
 func BenchmarkPopCountByClear(b *testing.B) {
+	total := 0
 	for i := 0; i < b.N; i++ {
-		PopCountByClear(x)
+		total += PopCountByClear(x)
 	}
+	result = total
 }
 
 func TestPopCountByShift(t *testing.T) {
