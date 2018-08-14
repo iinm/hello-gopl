@@ -1,4 +1,4 @@
-## ch01
+## ch01, ch02
 
 - :+1: p.4 gofmt: 書式に関する不毛な議論を排除
 - :+1: p.6 `i++` は文であり式ではない
@@ -18,3 +18,7 @@
   - countLinesの引数をFileじゃなくてReaderにして、stringからReaderを作れば良さそう。
 - TODO: :question: ネストしたデータを `reflect.DeepEqual` で比較すると、違っていたときにどこが違うか分からない。power assertみたいなものはないの？
 - :+1: p.43 名前付き型 同じfloat64でも、CelsiusとFahrenheitを組み合わせてしまう誤りを避けることができる。
+
+## ch03
+
+- (質問表) p.64 失敗をboolで表しているがerrorを使わないのはなぜですか？
