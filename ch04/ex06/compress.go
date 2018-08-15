@@ -25,15 +25,16 @@ func compressSpaces(b []byte) ([]byte, error) {
 			return nil, errors.New(fmt.Sprintf("invalid code: %x %[1]b\n", b[i]))
 		}
 
-		if previous == nil {
-			previous = b[i : i+size]
-			if isSpace(previous) {
+		if i == 0 { // init
+			if isSpace(b[i : i+size]) {
+				previous = []byte(" ")
 				b[i] = ' '
-				i, j = i+1, j+1
+				j += 1
 			} else {
-				i += size
+				previous = b[i : i+size]
 				j += size
 			}
+			i += size
 			continue
 		}
 

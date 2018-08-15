@@ -18,6 +18,7 @@ func TestCompressSpaces(t *testing.T) {
 		{[]byte("こんにちは、\u00a0\u0085世界"), []byte("こんにちは、 世界")},
 		{[]byte("こんにちは、世界\t\n"), []byte("こんにちは、世界 ")},
 		{[]byte("\t\nこんにちは、世界"), []byte(" こんにちは、世界")},
+		{[]byte("\u00a0\nこんにちは、世界"), []byte(" こんにちは、世界")},
 	}
 
 	for _, test := range tests {
