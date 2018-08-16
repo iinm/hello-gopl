@@ -20,6 +20,11 @@ func TestRotate(t *testing.T) {
 		{[]int{0, 1, 2, 3, 4}, -2, []int{3, 4, 0, 1, 2}},
 		{[]int{0, 1, 2, 3, 4}, -6, []int{4, 0, 1, 2, 3}},
 		{[]int{0, 1, 2, 3, 4}, -7, []int{3, 4, 0, 1, 2}},
+
+		{[]int{0, 1, 2, 3}, 2, []int{2, 3, 0, 1}},
+		{[]int{0, 1, 2, 3}, -2, []int{2, 3, 0, 1}},
+		{[]int{0, 1, 2, 3, 4, 5}, 3, []int{3, 4, 5, 0, 1, 2}},
+		{[]int{0, 1, 2, 3, 4, 5}, -3, []int{3, 4, 5, 0, 1, 2}},
 	}
 
 	for _, test := range tests {
@@ -43,17 +48,15 @@ func rotateByReverse(s []int, step int) {
 	reverse(s)
 }
 
-var s []int
-
 func BenchmarkRatateByReverse(b *testing.B) {
-	s = []int{0, 1, 2, 3, 4}
+	s := []int{0, 1, 2, 3, 4}
 	for i := 0; i < b.N; i++ {
 		rotateByReverse(s, 2)
 	}
 }
 
 func BenchmarkRatate(b *testing.B) {
-	s = []int{0, 1, 2, 3, 4}
+	s := []int{0, 1, 2, 3, 4}
 	for i := 0; i < b.N; i++ {
 		rotate(s, 2)
 	}
