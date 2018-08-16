@@ -17,16 +17,17 @@ func isAnagran(s1, s2 string) bool {
 	// 文字の頻度
 	runeCount1 := countRunes(s1)
 	runeCount2 := countRunes(s2)
+
+	if len(runeCount1) != len(runeCount2) {
+		return false
+	}
+
 	for r, count1 := range runeCount1 {
 		if count2, ok := runeCount2[r]; !ok && count1 != count2 {
 			return false
 		}
 	}
-	for r, count2 := range runeCount2 {
-		if count1, ok := runeCount1[r]; !ok && count1 != count2 {
-			return false
-		}
-	}
+
 	return true
 }
 
