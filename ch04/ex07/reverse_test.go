@@ -17,9 +17,9 @@ func TestReverseUnicodeBytes(t *testing.T) {
 
 	for _, test := range tests {
 		descr := fmt.Sprintf("reverseUnicodeBytes(%q)", test.b)
-		got, _ := reverseUnicodeBytes(test.b)
-		if !reflect.DeepEqual(got, test.want) {
-			t.Errorf("%s = %q, want %q", descr, got, test.want)
+		_, _ = reverseUnicodeBytes(test.b)
+		if !reflect.DeepEqual(test.b, test.want) {
+			t.Errorf("%s = %q, want %q", descr, test.b, test.want)
 		}
 	}
 }
