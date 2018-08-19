@@ -31,12 +31,13 @@ func visit(links []string, n *html.Node) []string {
 		case "img", "script":
 			linkAttrKey = "src"
 		}
-		for _, a := range n.Attr {
-			if a.Key == linkAttrKey {
-				links = append(links, a.Val)
+		if len(linkAttrKey) > 0 {
+			for _, a := range n.Attr {
+				if a.Key == linkAttrKey {
+					links = append(links, a.Val)
+				}
 			}
 		}
-
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		links = visit(links, c)
