@@ -84,9 +84,31 @@ func TestForEachNode(t *testing.T) {
 		if got != test.want {
 			t.Errorf("%s = %v, want %v", descr, got, test.want)
 		}
+
 		// prettifyしたHTMLをパースできること
-		if _, err := html.Parse(strings.NewReader(got)); err != nil {
-			t.Errorf("failed to parse prettified html: %v; %v", err, got)
+		// todo 無効なHTMLを出力しても失敗しない
+		node, err := html.Parse(strings.NewReader(got))
+		if err != nil {
+			t.Errorf("%s = %v, could not parse: %v", descr, got, err)
+		}
+
+		if hasErrorNode(node) {
+			t.Errorf("%s = %v, should not contain error node", descr, got)
 		}
 	}
+}
+
+func hasErrorNode(n *html.Node) bool {
+	if n.Type == html.ErrorNode {
+		return true
+	}
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		hasErr := hasErrorNode(c)
+		if hasErr {
+			return true
+		}
+	}
+
+	return false
 }
