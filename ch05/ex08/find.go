@@ -24,6 +24,10 @@ func ElementByID(doc *html.Node, id string) *html.Node {
 }
 
 func forEachNode(n *html.Node, pre, post func(n *html.Node) bool) {
+	if n == nil {
+		return
+	}
+
 	if pre != nil {
 		willContinue := pre(n)
 		if !willContinue {
@@ -31,9 +35,8 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node) bool) {
 		}
 	}
 
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		forEachNode(c, pre, post)
-	}
+	forEachNode(n.FirstChild, pre, post)
+	forEachNode(n.NextSibling, pre, post)
 
 	if post != nil {
 		post(n)
