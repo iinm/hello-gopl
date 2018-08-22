@@ -5,34 +5,18 @@ import (
 )
 
 func ElementByID(doc *html.Node, id string) *html.Node {
+	var currentNode *html.Node
 	pre := func(n *html.Node) bool {
-		return match(n, id)
-	}
-	return forEachNode(doc, pre, nil)
-}
-
-func forEachNode(n *html.Node, pre, post func(n *html.Node) bool) *html.Node {
-	willContinue := true
-	if pre != nil {
-		willContinue = pre(n)
-	}
-
-	if !willContinue {
-		return n
-	}
-
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		end := forEachNode(c, pre, post)
-		if end != nil {
-			return end
+		willContinue := match(n, id)
+		if !willContinue {
+			currentNode = n
 		}
+		return willContinue
 	}
 
-	if post != nil {
-		post(n)
-	}
+	forEachNode(doc, pre, nil)
 
-	return nil
+	return currentNode
 }
 
 func match(n *html.Node, id string) bool {
@@ -44,4 +28,23 @@ func match(n *html.Node, id string) bool {
 		}
 	}
 	return true
+}
+
+func forEachNode(n *html.Node, pre, post func(n *html.Node) bool) {
+	willContinue := true
+	if pre != nil {
+		willContinue = pre(n)
+	}
+
+	if !willContinue {
+		return
+	}
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		forEachNode(c, pre, post)
+	}
+
+	if post != nil {
+		post(n)
+	}
 }
