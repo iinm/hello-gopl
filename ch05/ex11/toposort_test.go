@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -15,7 +16,67 @@ var wikipediaSampleDeps = map[string][]string{
 	"8":  []string{"7", "3"},
 }
 
-func TestTopoSort(t *testing.T) {
+func TestTopoSortShouldReturnError(t *testing.T) {
+	tests := []struct {
+		deps map[string][]string
+	}{
+		{
+			// 循環有り: calculus -> linear algebra -> calculus
+			map[string][]string{
+				"algorithms":     {"data structures"},
+				"calculus":       {"linear algebra"},
+				"linear algebra": {"calculus"},
+
+				"compilers": {
+					"data structures",
+					"formal languages",
+					"computer organization",
+				},
+
+				"data structures":       {"discrete math"},
+				"databases":             {"data structures"},
+				"discrete math":         {"intro to programming"},
+				"formal languages":      {"discrete math"},
+				"networks":              {"operating systems"},
+				"operating systems":     {"data structures", "computer organization"},
+				"programming languages": {"data structures", "computer organization"},
+			},
+		},
+		{
+			// 循環有り: database -> data structures -> discrete math -> database
+			map[string][]string{
+				"algorithms": {"data structures"},
+				"calculus":   {"linear algebra"},
+
+				"compilers": {
+					"data structures",
+					"formal languages",
+					"computer organization",
+				},
+
+				"data structures":       {"discrete math"},
+				"databases":             {"data structures"},
+				"discrete math":         {"databases"},
+				"formal languages":      {"discrete math"},
+				"networks":              {"operating systems"},
+				"operating systems":     {"data structures", "computer organization"},
+				"programming languages": {"data structures", "computer organization"},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		descr := fmt.Sprintf("topoSort(%v)", test.deps)
+		_, err := topoSort(test.deps)
+		errSubstr := "circular dependency"
+		// 循環依存のエラーを返すこと
+		if err == nil || !strings.Contains(err.Error(), errSubstr) {
+			t.Errorf(`%s = _, %v, want %q`, descr, err, errSubstr)
+		}
+	}
+}
+
+func TestTopoSortShouldSortTopologically(t *testing.T) {
 	tests := []struct {
 		deps map[string][]string
 	}{
@@ -46,9 +107,15 @@ func TestTopoSort(t *testing.T) {
 
 	for _, test := range tests {
 		descr := fmt.Sprintf("topoSort(%v)", test.deps)
-		got := topoSort(test.deps)
-		if err := isTopological(got, test.deps); err != nil {
-			t.Errorf("%s = %q => %q", descr, got, err)
+
+		got, sortErr := topoSort(test.deps)
+		if sortErr != nil {
+			t.Errorf("%s = (%q, %q)", descr, got, sortErr)
+		}
+
+		topologicalErr := isTopological(got, test.deps)
+		if topologicalErr != nil {
+			t.Errorf("%s = (%q, %q) => %q", descr, got, sortErr, topologicalErr)
 		}
 	}
 }
