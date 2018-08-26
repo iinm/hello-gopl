@@ -93,7 +93,11 @@ func crawl(rawurl string) []string {
 		log.Print(err)
 		return nil
 	}
-	if resp.StatusCode != http.StatusOK {
+	switch resp.StatusCode {
+	case http.StatusOK:
+	case http.StatusMovedPermanently:
+	case http.StatusFound:
+	default:
 		resp.Body.Close()
 		log.Printf("getting %s: %s", rawurl, resp.Status)
 		return nil
