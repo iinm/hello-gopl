@@ -77,7 +77,18 @@ func save(body io.Reader, u *url.URL) {
 func crawl(rawurl string) []string {
 	fmt.Println(rawurl)
 
-	resp, err := http.Get(rawurl)
+	client := &http.Client{
+		// prevent redirect
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+	req, err := http.NewRequest("GET", rawurl, nil)
+	if err != nil {
+		log.Print(err)
+		return nil
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Print(err)
 		return nil
@@ -91,7 +102,6 @@ func crawl(rawurl string) []string {
 	var buf bytes.Buffer
 	tee := io.TeeReader(resp.Body, &buf)
 	save(tee, resp.Request.URL)
-
 	list, err := links.Extract(&buf, resp.Request.URL)
 	resp.Body.Close()
 	if err != nil {
