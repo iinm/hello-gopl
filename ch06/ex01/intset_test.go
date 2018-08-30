@@ -71,6 +71,7 @@ func TestCopy(t *testing.T) {
 		s *IntSet
 	}{
 		{&IntSet{}},
+		{&IntSet{[]uint64{}}},
 		{&IntSet{[]uint64{3}}},
 		{&IntSet{[]uint64{3, 3}}},
 		{&IntSet{[]uint64{3, 3, 7}}},

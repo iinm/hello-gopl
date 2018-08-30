@@ -70,7 +70,7 @@ func (s *IntSet) Clear() {
 
 // Copy はセットのコピーを返す
 func (s *IntSet) Copy() *IntSet {
-	if len(s.words) == 0 {
+	if s.words == nil {
 		return &IntSet{}
 	}
 	clonedWords := make([]uint64, len(s.words))
