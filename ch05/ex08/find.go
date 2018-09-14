@@ -36,6 +36,7 @@ func forEachNode(n *html.Node, pre, post func(n *html.Node) bool) {
 	}
 
 	forEachNode(n.FirstChild, pre, post)
+	// todo: forEachNodeが継続するか否かを返さないとn.NextSiblingもチェックしてしまう
 	forEachNode(n.NextSibling, pre, post)
 
 	if post != nil {

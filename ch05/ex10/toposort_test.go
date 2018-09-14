@@ -15,6 +15,7 @@ var wikipediaSampleDeps = map[string][]string{
 	"8":  []string{"7", "3"},
 }
 
+// todo: 非決定的なので何度かテストを回すようにすると良い
 func TestTopoSort(t *testing.T) {
 	tests := []struct {
 		deps map[string][]string
