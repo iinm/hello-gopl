@@ -47,6 +47,7 @@ func TestDifferenceWith(t *testing.T) {
 	}
 }
 
+// todo: 内部のスライスの長さのバリエーションを増やしたほうが良い
 func TestSymmetricDifference(t *testing.T) {
 	tests := []struct {
 		s, t *IntSet
