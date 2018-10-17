@@ -36,8 +36,9 @@ func handleConn(c *net.TCPConn) {
 
 loop:
 	for {
+		timer := time.NewTimer(10 * time.Second)
 		select {
-		case <-time.After(10 * time.Second):
+		case <-timer.C:
 			break loop
 		case s, ok := <-input:
 			if !ok {
@@ -46,6 +47,7 @@ loop:
 			echoWaitGroup.Add(1)
 			go echo(c, s, 1*time.Second, &echoWaitGroup)
 		}
+		timer.Stop()
 	}
 
 	go func() {
