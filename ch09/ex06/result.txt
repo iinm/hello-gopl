@@ -1,0 +1,42 @@
+goos: linux
+goarch: amd64
+BenchmarkRender                        3         409375593 ns/op
+BenchmarkRenderWithGoRoutine           1        3190233384 ns/op
+BenchmarkRenderWithGoRoutine2          3         495449637 ns/op
+PASS
+ok      _/home/n/projects/hello-gopl/ch09/ex06       10.169s
+goos: linux
+goarch: amd64
+BenchmarkRender-2                              3         421302221 ns/op
+BenchmarkRenderWithGoRoutine-2                 1        5110546155 ns/op
+BenchmarkRenderWithGoRoutine2-2                3         491088087 ns/op
+PASS
+ok      _/home/n/projects/hello-gopl/ch09/ex06       11.671s
+goos: linux
+goarch: amd64
+BenchmarkRender-4                              3         402238244 ns/op
+BenchmarkRenderWithGoRoutine-4                 1        3953928688 ns/op
+BenchmarkRenderWithGoRoutine2-4                3         456348050 ns/op
+PASS
+ok      _/home/n/projects/hello-gopl/ch09/ex06       10.025s
+goos: linux
+goarch: amd64
+BenchmarkRender-8                              3         403096051 ns/op
+BenchmarkRenderWithGoRoutine-8                 1        4043658441 ns/op
+BenchmarkRenderWithGoRoutine2-8                3         467747130 ns/op
+PASS
+ok      _/home/n/projects/hello-gopl/ch09/ex06       10.069s
+goos: linux
+goarch: amd64
+BenchmarkRender-16                             3         404784741 ns/op
+BenchmarkRenderWithGoRoutine-16                1        4134779309 ns/op
+BenchmarkRenderWithGoRoutine2-16               2         500244282 ns/op
+PASS
+ok      _/home/n/projects/hello-gopl/ch09/ex06       8.782s
+goos: linux
+goarch: amd64
+BenchmarkRender-32                             3         402532867 ns/op
+BenchmarkRenderWithGoRoutine-32                1        4024997774 ns/op
+BenchmarkRenderWithGoRoutine2-32               2         518366445 ns/op
+PASS
+ok      _/home/n/projects/hello-gopl/ch09/ex06       8.591s
