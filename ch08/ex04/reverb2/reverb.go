@@ -29,11 +29,8 @@ func handleConn(c *net.TCPConn) {
 	// NOTE: ignoring potential errors from input.Err()
 
 	c.CloseRead()
-
-	go func() {
-		wg.Wait()
-		c.CloseWrite()
-	}()
+	wg.Wait()
+	c.CloseWrite()
 }
 
 func main() {
