@@ -15,6 +15,7 @@ func teller() {
 		case amount := <-deposits:
 			balance += amount
 		case amount := <-withdraw:
+			// TODO マイナスになることがあるので成功失敗を返す必要がある
 			balance -= amount
 		case balances <- balance:
 		}
