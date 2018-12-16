@@ -6,7 +6,7 @@ import (
 	sexpr "."
 )
 
-func Example_marshal() {
+func ExampleMarshal() {
 	type Movie struct {
 		Title, Subtitle string
 		Year            int
@@ -53,7 +53,7 @@ func Example_marshal() {
 	//  (Sequel nil))
 }
 
-func Example_marshal_mapList() {
+func ExampleMarshal_mapList() {
 	v := map[string][]string{
 		"Dr. Strangelove":            []string{"Peter Sellers", "hoge"},
 		"Grp. Capt. Lionel Mandrake": []string{"Peter Sellers", "foo"},
