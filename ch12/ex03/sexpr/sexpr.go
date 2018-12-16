@@ -83,7 +83,14 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 		}
 		buf.WriteByte(')')
 
-	default: // todo: chan, func, interface
+	case reflect.Interface:
+		fmt.Fprintf(buf, "(%q '", reflect.Indirect(v).Type())
+		if err := encode(buf, reflect.Indirect(v).Elem()); err != nil {
+			return err
+		}
+		buf.WriteByte(')')
+
+	default: // chan, func
 		return fmt.Errorf("unsupported type: %s", v.Type())
 	}
 	return nil
