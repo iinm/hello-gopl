@@ -80,6 +80,10 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 			if err := encode(buf, key); err != nil {
 				return err
 			}
+			buf.WriteByte(' ')
+			if err := encode(buf, v.MapIndex(key)); err != nil {
+				return err
+			}
 			buf.WriteByte(')')
 		}
 		buf.WriteByte(')')
