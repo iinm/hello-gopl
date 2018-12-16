@@ -66,6 +66,7 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 			if err := encode(buf, v.Field(i)); err != nil {
 				return err
 			}
+			buf.WriteByte(')')
 		}
 		buf.WriteByte(')')
 

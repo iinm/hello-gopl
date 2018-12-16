@@ -16,7 +16,7 @@ func TestMarchal(t *testing.T) {
 		{v: []bool{true, false}, want: []byte("(t nil)")},
 		{v: []float64{0.1, 3.1415}, want: []byte("(0.1 3.1415)")},
 		{v: complex(1, 2), want: []byte("#C(1 2)")},
-		{v: struct{ i testInterface }{[]int{1, 2, 3}}, want: []byte(`((i ("sexpr.testInterface" '(1 2 3)))`)},
+		{v: struct{ i testInterface }{[]int{1, 2, 3}}, want: []byte(`((i ("sexpr.testInterface" '(1 2 3))))`)},
 	}
 	for _, test := range tests {
 		descr := fmt.Sprintf("Marchal(%v)", test.v)
