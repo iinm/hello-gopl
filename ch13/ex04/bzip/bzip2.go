@@ -3,12 +3,13 @@ package bzip
 import (
 	"io"
 	"os/exec"
+	"sync"
 )
 
 type writer struct {
 	w   io.WriteCloser
 	cmd *exec.Cmd
-	//wg  sync.WaitGroup
+	wg  sync.WaitGroup
 }
 
 func NewWriter(out io.Writer) (io.WriteCloser, error) {
@@ -24,10 +25,10 @@ func NewWriter(out io.Writer) (io.WriteCloser, error) {
 
 	w := &writer{w: stdin, cmd: cmd}
 
-	//w.wg.Add(1)
+	w.wg.Add(1)
 	go func(dest io.Writer, src io.Reader) {
+		defer w.wg.Done()
 		io.Copy(dest, src)
-		//w.wg.Done()
 	}(out, stdout)
 
 	err = cmd.Start()
@@ -49,6 +50,6 @@ func (w *writer) Close() error {
 	if err := w.cmd.Wait(); err != nil {
 		return err
 	}
-	//w.wg.Wait()
+	w.wg.Wait()
 	return nil
 }
