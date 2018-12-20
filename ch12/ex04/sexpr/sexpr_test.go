@@ -40,12 +40,12 @@ func ExampleMarshal() {
 	// ((Title "Dr. Strangelove")
 	//  (Subtitle "How I Learned to Stop Worrying and Love the Bomb")
 	//  (Year 1964)
-	//  (Actor (("Dr. Strangelove" "Peter Sellers")
-	//          ("Grp. Capt. Lionel Mandrake" "Peter Sellers")
-	//          ("Pres. Merkin Muffley" "Peter Sellers")
+	//  (Actor (("Brig. Gen. Jack D. Ripper" "Sterling Hayden")
+	//          ("Dr. Strangelove" "Peter Sellers")
 	//          ("Gen. Buck Turgidson" "George C. Scott")
-	//          ("Brig. Gen. Jack D. Ripper" "Sterling Hayden")
-	//          ("Maj. T.J. \"King\" Kong" "Slim Pickens")))
+	//          ("Grp. Capt. Lionel Mandrake" "Peter Sellers")
+	//          ("Maj. T.J. \"King\" Kong" "Slim Pickens")
+	//          ("Pres. Merkin Muffley" "Peter Sellers")))
 	//  (Oscars ("Best Actor (Nomin.)"
 	//           "Best Adapted Screenplay (Nomin.)"
 	//           "Best Director (Nomin.)"
@@ -63,9 +63,9 @@ func ExampleMarshal_mapList() {
 	fmt.Print(string(bs))
 
 	// Output:
-	// (("Pres. Merkin Muffley" ("Peter Sellers"))
-	//  ("Dr. Strangelove" ("Peter Sellers"
+	// (("Dr. Strangelove" ("Peter Sellers"
 	//                      "hoge"))
 	//  ("Grp. Capt. Lionel Mandrake" ("Peter Sellers"
-	//                                 "foo")))
+	//                                 "foo"))
+	//  ("Pres. Merkin Muffley" ("Peter Sellers")))
 }

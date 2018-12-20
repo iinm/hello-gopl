@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"reflect"
+	"sort"
 )
 
 func Marshal(v interface{}) ([]byte, error) {
@@ -72,8 +73,17 @@ func encode(buf *bytes.Buffer, v reflect.Value, indent int) error {
 		buf.WriteByte(')')
 
 	case reflect.Map: // ((key value) ...)
+		// エンコード結果がおなじになるようにキーをソートしておく
+		var keys []reflect.Value
+		for _, key := range v.MapKeys() {
+			keys = append(keys, key)
+		}
+		sort.Slice(keys, func(i, j int) bool {
+			return stringify(keys[i]) < stringify(keys[j])
+		})
+
 		buf.WriteByte('(')
-		for i, key := range v.MapKeys() {
+		for i, key := range keys {
 			if i > 0 {
 				buf.WriteString(fmt.Sprintf("\n%*s", indent+1, ""))
 			}
@@ -102,4 +112,12 @@ func encode(buf *bytes.Buffer, v reflect.Value, indent int) error {
 		return fmt.Errorf("unsupported type: %s", v.Type())
 	}
 	return nil
+}
+
+func stringify(v reflect.Value) string {
+	var buf bytes.Buffer
+	if err := encode(&buf, v, 0); err != nil {
+		return ""
+	}
+	return buf.String()
 }

@@ -34,7 +34,7 @@ func ExampleMarshal() {
 
 	// Output:
 	// ((Title "Dr. Strangelove")
-	//  (Dubbing (("Tom" "Imanishi")
-	//            ("James" "Kimura")))
+	//  (Dubbing (("James" "Kimura")
+	//            ("Tom" "Imanishi")))
 	//  (Music ("Hello World!")))
 }
