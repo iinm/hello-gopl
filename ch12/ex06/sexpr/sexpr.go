@@ -122,6 +122,7 @@ func encode(buf *bytes.Buffer, v reflect.Value, indent int) error {
 	return nil
 }
 
+// todo reflect.Zero を使う
 func zeroValue(v reflect.Value) bool {
 	switch v.Kind() {
 	case reflect.Invalid:
