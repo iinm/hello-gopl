@@ -6,7 +6,6 @@ import (
 	"io"
 	"reflect"
 	"strconv"
-	"strings"
 	"text/scanner"
 )
 
@@ -106,7 +105,7 @@ func readList(lex *lexer, v reflect.Value) {
 			tag := fieldInfo.Tag           // a reflect.StructTag
 			name := tag.Get("sexpr")
 			if name == "" {
-				name = strings.ToLower(fieldInfo.Name)
+				name = fieldInfo.Name
 			}
 			fields[name] = v.Field(i)
 		}

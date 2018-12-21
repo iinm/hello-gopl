@@ -12,8 +12,8 @@ func TestUnmarshal(t *testing.T) {
 		Subtitle string            `sexpr:"subtitle"`
 		Year     int               `sexpr:"year"`
 		Actor    map[string]string `sexpr:"actors"`
-		Oscars   []string          `sexpr:"oscars"`
-		Sequel   *string           `sexpr:"sequel"`
+		Oscars   []string
+		Sequel   *string `sexpr:"sequel"`
 	}
 	input := []byte(`
 	((title "Dr. Strangelove")
@@ -25,7 +25,7 @@ func TestUnmarshal(t *testing.T) {
 	          ("Grp. Capt. Lionel Mandrake" "Peter Sellers")
 	          ("Maj. T.J. \"King\" Kong" "Slim Pickens")
 	          ("Pres. Merkin Muffley" "Peter Sellers")))
-	 (oscars ("Best Actor (Nomin.)"
+	 (Oscars ("Best Actor (Nomin.)"
 	          "Best Adapted Screenplay (Nomin.)"
 	          "Best Director (Nomin.)"
 	          "Best Picture (Nomin.)"))
